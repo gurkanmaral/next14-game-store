@@ -32,9 +32,10 @@ export const  createOrder = async (orderData:CreateOrderParams) => {
             const newOrder = await db.order.create({            
                  data:orderData,     
             })
-            return JSON.parse(JSON.stringify(newOrder));
+            return newOrder
     } catch (error) {
         console.log(error)
+        return null; // Indicate failure
     }
 
 }
@@ -46,9 +47,10 @@ export const createBoughtGame = async (boughtData:BoughtGameParams) => {
             data:boughtData
 
         })
-        return JSON.parse(JSON.stringify(newBoughtGame));
+        return newBoughtGame
     } catch (error) {
         console.log(error)
+        return null; // Indicate failure
     }
 
 }
@@ -84,10 +86,9 @@ export const checkoutOrder = async (orders: CheckoutOrderParams,totalAmount:numb
           },
           mode: 'payment',
     
-          success_url: `${process.env.NEXT_PUBLIC_APP_URL}/success`,
-          cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/cancel`,
+          success_url: `${process.env.NEXT_PUBLIC_APP_URL}/`,
+          cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/`,
         });
-    
         redirect(session.url!)
     } catch (error) {
       throw error;

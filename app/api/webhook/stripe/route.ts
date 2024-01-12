@@ -23,10 +23,23 @@ export async function POST(request:Request)  {
    if (eventType === 'checkout.session.completed') {
     const { id, amount_total, metadata } = event.data.object;
 
+    console.log("Stripe ID:", id);
+    console.log("Amount Total:", amount_total);
+    console.log("Metadata:", metadata);
 
-    const gameIds = JSON.parse(metadata.gameIds || '[]');
-    const userId = metadata.userId || '';
+    const gameIdsString = metadata && metadata.gameIds ? metadata.gameIds : '[]';
 
+    let gameIds;
+    try {
+      gameIds = JSON.parse(gameIdsString);
+    } catch (error) {
+      console.error('Error parsing gameIds:', error);
+      // Handle the error appropriately, maybe return an error response
+    }
+    const userId = metadata && metadata.userId ? metadata.userId : '';
+
+
+  console.log(gameIds)
      const order = {
         stripeId: id,
         userId: userId,
@@ -36,16 +49,27 @@ export async function POST(request:Request)  {
 
     const newOrder = await createOrder(order);
 
+    if(!newOrder) {
+      console.error('Failed to create a new order.');
+      // Handle the situation appropriately, maybe return an error response
+      return NextResponse.json({ message: 'Failed to create a new order' }, { status: 500 });
+    }
+
+    console.log("Game IDs:", gameIds);
+    console.log("User ID:", userId);
     for (const gameId of gameIds) {
         const boughtGame = {
           orderId: newOrder.id,
           gameId: gameId,
         };
-        await createBoughtGame(boughtGame);
-
-    return NextResponse.json({ message: 'OK', order: newOrder })
+       const createdBoughtGame = await createBoughtGame(boughtGame);
+      if (!createdBoughtGame) {
+      console.error('Failed to create a bought game record.');
+      // Handle the situation appropriately, maybe return an error response
+      return NextResponse.json({ message: 'Failed to create a bought game' }, { status: 500 });
+    }
   }
-
+  return NextResponse.json({ message: 'OK', order: newOrder })
    }
   return new Response('', { status: 200 })
 }
