@@ -34,6 +34,7 @@ model User {
 }
 model BoughtGame {
   id        String   @id @default(cuid())
+  stripeId  String
   userId    String
   gameId    String
   purchaseDate DateTime
