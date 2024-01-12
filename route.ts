@@ -1,7 +1,8 @@
 export const publicRoutes = [
     "/",
     "/auth/new-verification",
-    "/auth/new-password"
+    "/auth/new-password",
+    '/api/webhook/stripe',
 ];
 
 export const authRoutes = [
