@@ -16,7 +16,9 @@ export const  createOrder = async (order:CreateOrderParams) => {
 
     try {
         const newOrder = await db.boughtGame.create({
-            
+            ...order,
+            gameId:order.gameId,
+            userId:order.userId,
         })
     } catch (error) {
         

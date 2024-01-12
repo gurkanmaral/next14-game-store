@@ -36,10 +36,10 @@ model BoughtGame {
   id        String   @id @default(cuid())
   stripeId  String
   userId    String
-  gameId    String
+  gameId    String[]
   purchaseDate DateTime
-  gameImage String
-  gameTitle String
+  gameImage String[]
+  gameTitle String[]
   user      User     @relation(fields: [userId], references: [id])
  
 }
