@@ -36,6 +36,7 @@ const CreateForm = () => {
         }
     })
 
+    const domain = process.env.NEXT_PUBLIC_APP_URL;
     const handleImage = (e:ChangeEvent<HTMLInputElement>,fieldChange: (value:string)=>void)=>{
         e.preventDefault()
   
@@ -61,7 +62,7 @@ const CreateForm = () => {
      const uploadImage = async(imagePath:string)=>{
         try {
     
-            const response = await fetch(`http://localhost:3000/api/upload`,{
+            const response = await fetch(`${domain}/api/upload`,{
                 method: 'POST',
                 body: JSON.stringify({path: imagePath})
             })
