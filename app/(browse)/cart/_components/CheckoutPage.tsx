@@ -3,6 +3,8 @@ import { useCartStore } from '@/lib/redux/store'
 import React from 'react'
 import CheckoutCard from './CheckoutCard';
 import { Button } from '@/components/ui/button';
+import Link from 'next/link';
+import CheckoutButton from './CheckoutButton';
 
 const CheckoutPage = () => {
 
@@ -23,9 +25,7 @@ console.log(games)
           <span>Total items in cart: {totalItems}</span>
           <span>Total Price: {totalPrice}$</span>
         </div>
-        <Button>
-          Checkout
-        </Button>
+        <CheckoutButton games={games} />
     </div>
   )
 }

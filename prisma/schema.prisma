@@ -30,19 +30,26 @@ model User {
   twoFactorConfirmation TwoFactorConfirmation?
   comments      Comment[]
   rate          Rate[]
-  boughtGames   BoughtGame[] 
+  orders            Order[]
+}
+
+model Order {
+  id            String   @id @default(cuid())
+  userId        String
+  stripeId      String
+  purchaseDate  DateTime  @default(now())
+  total         String
+  boughtGames   BoughtGame[]
+  user          User      @relation(fields: [userId], references: [id])
 }
 model BoughtGame {
   id        String   @id @default(cuid())
-  stripeId  String
-  userId    String
-  gameId    String[]
-  purchaseDate DateTime
-  gameImage String[]
-  gameTitle String[]
-  user      User     @relation(fields: [userId], references: [id])
- 
+  orderId   String
+  gameId    String
+  order     Order    @relation(fields: [orderId], references: [id])
 }
+
+
 model Account {
   id                 String @id @default(cuid())
   userId             String

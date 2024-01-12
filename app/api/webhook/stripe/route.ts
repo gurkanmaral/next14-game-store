@@ -1,5 +1,6 @@
 import stripe from 'stripe'
 import { NextResponse } from 'next/server'
+import { createBoughtGame, createOrder } from '@/actions/order'
 
 export async function POST(request:Request)  {
     
@@ -20,19 +21,31 @@ export async function POST(request:Request)  {
 
    // CREATE
    if (eventType === 'checkout.session.completed') {
-    const { id, amount_total, metadata } = event.data.object
+    const { id, amount_total, metadata } = event.data.object;
 
-    const order = {
-      stripeId: id,
-      gameId: metadata?.gameId || '',
-      userId: metadata?.userId || '',
-      totalAmount: amount_total ? (amount_total / 100).toString() : '0',
-      createdAt: new Date(),
-    }
 
-    const newOrder = await createOrder(order)
+    const gameIds = JSON.parse(metadata.gameIds || '[]');
+    const userId = metadata.userId || '';
+
+     const order = {
+        stripeId: id,
+        userId: userId,
+        purchaseDate: new Date(),
+        total: amount_total ? (amount_total / 100).toString() : '0',
+  };
+
+    const newOrder = await createOrder(order);
+
+    for (const gameId of gameIds) {
+        const boughtGame = {
+          orderId: newOrder.id,
+          gameId: gameId,
+        };
+        await createBoughtGame(boughtGame);
+
     return NextResponse.json({ message: 'OK', order: newOrder })
   }
 
+   }
   return new Response('', { status: 200 })
 }
