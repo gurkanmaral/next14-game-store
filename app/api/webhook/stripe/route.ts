@@ -2,19 +2,25 @@ import stripe from 'stripe'
 import { NextResponse } from 'next/server'
 import { createBoughtGame, createOrder } from '@/actions/order'
 
-export async function POST(request:Request)  {
-    
-    const body = await request.text()
-    
-    const sig = request.headers.get('stripe-signature') as string
-    const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET!
 
-    let event
+export async function POST(request:Request)  {
+  
+  const body = await request.text()
+
+  const sig = request.headers.get('stripe-signature') as string
+
+  const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET!
+
+  let event
 
     try {
-        event = stripe.webhooks.constructEvent(body,sig,endpointSecret)
-    } catch (err) {
-        return NextResponse.json({message:'Webhook error', error:err})
+      if (!sig || !endpointSecret) return;
+      event = stripe.webhooks.constructEvent(body, sig, endpointSecret);
+       // Handle the webhook event here
+  console.log('Webhook event:', event);
+    } catch (err:any) {
+      console.log(`❌ Error message: ${err.message}`);
+      return new Response(`Webhook Error: ${err.message}`, { status: 400 });
     }
      // Get the ID and type
   const eventType = event.type
@@ -57,6 +63,9 @@ export async function POST(request:Request)  {
 
     console.log("Game IDs:", gameIds);
     console.log("User ID:", userId);
+
+    let createdBoughtGames = [];
+
     for (const gameId of gameIds) {
         const boughtGame = {
           orderId: newOrder.id,
@@ -68,8 +77,9 @@ export async function POST(request:Request)  {
       // Handle the situation appropriately, maybe return an error response
       return NextResponse.json({ message: 'Failed to create a bought game' }, { status: 500 });
     }
+    createdBoughtGames.push(createdBoughtGame);
   }
-  return NextResponse.json({ message: 'OK', order: newOrder })
+  return NextResponse.json({ message: 'OK', order: newOrder, boughtGames: createdBoughtGames })
    }
   return new Response('', { status: 200 })
 }

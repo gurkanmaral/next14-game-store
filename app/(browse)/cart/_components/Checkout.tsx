@@ -22,7 +22,6 @@ const Checkout = ({games,userId}) => {
           console.log('Order canceled -- continue to shop around and checkout when you’re ready.');
         }
 
-        calculateTotalAmount();
     },[]);
 
     useEffect(() => {
@@ -45,19 +44,17 @@ const Checkout = ({games,userId}) => {
       }));
 console.log(orders)
 
-    const onCheckout = async (event) => {
-        event.preventDefault(); 
+    const onCheckout = async () => {
         try {
           await checkoutOrder(orders,totalAmount);
         } catch (error) {
           console.error('Error during checkout:', error);
-          // Handle errors as needed
         }
       };
 
 
   return (
-    <form onSubmit={onCheckout} method="post">
+    <form action={onCheckout} method="post">
         <Button type='submit' role='link' size="lg" > 
             buy
         </Button>

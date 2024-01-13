@@ -58,26 +58,23 @@ export const createBoughtGame = async (boughtData:BoughtGameParams) => {
 export const checkoutOrder = async (orders: CheckoutOrderParams,totalAmount:number) => {
     const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
   
-    // Convert the price to cents (Stripe expects prices in the smallest currency unit)
+    
     const price = Number(totalAmount) * 100;
     
     try {
         const lineItems = orders.map(order => ({
           price_data: {
             currency: 'usd',
-            unit_amount: order.price * 100, // Assuming price is in dollars, convert to cents
+            unit_amount: order.price * 100, 
             product_data: {
               name: order.gameTitle,
             },
           },
           quantity: 1,
         }));
-        console.log(lineItems)
 
         const gameIds = orders.map(order => order.gameId);
-
-        console.log(gameIds)
-
+        
         const session = await stripe.checkout.sessions.create({
           line_items: lineItems,
           metadata: {
@@ -85,7 +82,6 @@ export const checkoutOrder = async (orders: CheckoutOrderParams,totalAmount:numb
             gameIds: JSON.stringify(gameIds), 
           },
           mode: 'payment',
-    
           success_url: `${process.env.NEXT_PUBLIC_APP_URL}/`,
           cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/`,
         });
