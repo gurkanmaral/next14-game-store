@@ -14,6 +14,13 @@ import Link from "next/link";
 import FormError from "@/components/auth/FormError";
 import FormSuccess from "@/components/auth/FormSuccess";
 import { login } from "@/actions/login";
+import { Poppins } from "next/font/google";
+import { cn } from "@/lib/utils";
+
+const font = Poppins({
+    subsets: ["latin"],
+    weight: ["100", "300", "400", "700", "900"],
+  });
 
 
 
@@ -106,6 +113,7 @@ const LoginForm = () => {
                        {...field}
                        placeholder="John.doe@example.com"
                        type="email"
+                       className="bg-black border border-white"
                        />
                    </FormControl>
                    <FormMessage 
@@ -126,6 +134,7 @@ const LoginForm = () => {
                        {...field}
                        placeholder="******"
                        type="password"
+                       className="bg-black border border-white"
                        />
                    </FormControl>
                    <Button size="sm" variant="link" asChild className="px-0 font-normal">

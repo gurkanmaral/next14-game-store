@@ -9,34 +9,56 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel"
 import Image from "next/image";
+import Link from "next/link";
 
 
-const Slider = () => {
+interface SliderProps {
+  games: SliderGameProps[];
+}
 
+interface SliderGameProps {
+  id:string;
+  title:string;
+  allImages:string[];
+  description:string;
+  SpecialPrice:string;
+  price:string;
+}
+
+const Slider = ({games}:SliderProps) => {
+
+
+
+  console.log(games)
   return (
-    <Carousel className="w-full max-w-7xl ">
+    <Carousel className="w-full max-w-7xl border-none hidden md:block">
     <CarouselContent>
-      {Array.from({ length: 5 }).map((_, index) => (
-        <CarouselItem key={index} className="">
+      {games.map((game, index) => (
+        <CarouselItem key={game.id} className="">
           <div className="p-1">
-            <Card>
-              <CardContent className=" flex h-[700px] items-center justify-center">
-                <div className="">
-                    <Image
-                    src="/assas1.jpg"
-                    alt="image"
-                    fill
-                    className=" rounded-xl"
-                    />
-                </div>
+            <Card className="border-none">
+              <CardContent className="relative flex h-[700px] items-center justify-center">
+                <Link href={`/game-details/${game.id}`} className="">                   
+                      <Image
+                      src={game.allImages[0]}
+                      alt="slider-image"
+                      fill
+                      className=" rounded-xl opacity-85"
+                      />              
+                    <div className="absolute bottom-[20%] right-[10%] w-[20%] h-auto ">
+                      <h1 className="text-5xl font-bold ">
+                        {game.title}
+                      </h1>
+                    </div>
+                </Link>
               </CardContent>
             </Card>
           </div>
         </CarouselItem>
       ))}
     </CarouselContent>
-    <CarouselPrevious />
-    <CarouselNext />
+    <CarouselPrevious className="bg-black border border-white-/15" />
+    <CarouselNext className="bg-black border border-white-/15"  />
   </Carousel>
   )
 }

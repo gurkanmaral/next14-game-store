@@ -1,16 +1,30 @@
+
 import React, { useEffect, useState } from 'react'
 import { loadStripe } from '@stripe/stripe-js';
 import { Button } from '@/components/ui/button';
 import { checkoutOrder } from '@/actions/order';
+import { useCartStore } from '@/lib/redux/store';
 
 
 loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
 
+interface CheckoutProps {
+  alreadyBought:boolean;
+  userId:string;
+  games:GameProps[];
+}
+type GameProps = {
+    gameId: string;
+    gameImage:string;
+    gameTitle:string;
+    price:number;
 
+}
 
-const Checkout = ({games,userId}) => {
+const Checkout = ({games,userId,alreadyBought}:CheckoutProps) => {
     const [totalAmount, setTotalAmount] = useState(0);
 
+    const {resetCart} = useCartStore()
 
     useEffect(()=>{
         const query = new URLSearchParams(window.location.search);
@@ -34,7 +48,6 @@ const Checkout = ({games,userId}) => {
         const total = games.reduce((acc, game) => acc + game.price, 0);
         setTotalAmount(total);
       };
-    console.log(games)
 
     const orders = games.map((game) => ({
         gameTitle: game.gameTitle,
@@ -42,11 +55,11 @@ const Checkout = ({games,userId}) => {
         price: game.price,
         userId: userId,
       }));
-console.log(orders)
 
     const onCheckout = async () => {
         try {
           await checkoutOrder(orders,totalAmount);
+          resetCart();
         } catch (error) {
           console.error('Error during checkout:', error);
         }
@@ -55,8 +68,8 @@ console.log(orders)
 
   return (
     <form action={onCheckout} method="post">
-        <Button type='submit' role='link' size="lg" > 
-            buy
+        <Button disabled={alreadyBought} type='submit' role='link' size="lg" className='w-full bg-emerald-500 text-white hover:bg-emerald-400 shadow-sm shadow-white/15' > 
+            {alreadyBought ? "You own this game" : "Buy"}
         </Button>
     </form>
   )

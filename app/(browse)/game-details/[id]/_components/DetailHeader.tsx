@@ -21,18 +21,20 @@ const DetailHeader = ({allImages}:{allImages:string[]}) => {
 
   return (
    <>
-     <div className='col-span-4 '>
-            <img src="/sekiro2.jpg" alt="" className='w-full  object-cover rounded-lg ' />
+     <div className='col-span-1 md:col-span-4 '>
+            <img src={selectedImage} alt="" className='w-full h-auto   object-cover rounded-lg ' />
         </div>
-        <div className='col-span-1 flex flex-col gap-4 p-4'>
+        <div className='col-span-1 grid grid-cols-4 gap-4'>
         {allImages.map((image, index) => (
-          <img
+         <div key={index} className='col-span-1 md:col-span-4'>
+             <img
             key={index}
             src={image}
             alt=""
-            className='h-[138px] object-cover rounded-md'
+            className={`h-[138px] object-cover rounded-md cursor-pointer ${selectedImage === image ? "border-2 border-emerald-500" : "border-2 border-transparent"}`}
             onClick={() => handleImageClick(image)}
           />
+         </div>
         ))}
     </div>
    </>

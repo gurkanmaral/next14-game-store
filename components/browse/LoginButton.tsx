@@ -16,11 +16,12 @@ const LoginButton = ({
     asChild
 
 }:LoginButtonProps) => {
-    const router = useRouter();
-    const onClick = ()=>{
-        router.push('auth/login')
-    }
-
+    const router = useRouter(); 
+    const onClick = () => {
+        
+        router.push('/auth/login');
+    };
+  
     if(mode === "modal"){
         return (
             <Dialog>

@@ -10,11 +10,11 @@ const Actions =async () => {
 
   const user = await currentUser();
   return (
-    <div>
+    <div className='ml-2 md:ml-0'>
         {!user && (
           <div className='flex items-center justify-center gap-5'>
             <LoginButton mode="redirect" asChild>
-              <Button variant="outline" size="lg">
+              <Button size="lg" className='bg-black border border-white/15 text-white hover:bg-white hover:text-black transition-all'>
                 Sign in
               </Button>
             </LoginButton>

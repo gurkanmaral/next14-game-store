@@ -12,18 +12,17 @@ const CheckoutPage = () => {
 
 
 
-console.log(games)
   return (
     <div className='w-full flex flex-col'>
         <h1 className='text-2xl font-bold'>Checkout</h1>
-        <div className='grid grid-cols-1 mt-10'>
+        <div className='grid grid-cols-1 mt-10 gap-4'>
           {games.map((game)=>(
               <CheckoutCard key={game.gameId} game={game} removeFromCart={removeFromCart}  />
           ))}
         </div>
-        <div className='flex flex-col'>
-          <span>Total items in cart: {totalItems}</span>
-          <span>Total Price: {totalPrice}$</span>
+        <div className='flex flex-col gap-4 mt-4 mb-4'>
+          <span className='text-xl font-bold'>Total items in cart: <span className='text-emerald-500'>{totalItems}</span></span>
+          <span className='text-xl font-bold'>Total Price: <span className='text-emerald-500'>{totalPrice}$</span></span>
         </div>
         <CheckoutButton games={games} />
     </div>

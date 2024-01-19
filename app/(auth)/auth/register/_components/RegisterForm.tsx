@@ -68,6 +68,7 @@ const RegisterForm = () => {
                                 {...field}
                                 placeholder="John Doe"
                                 type="name"
+                                className="bg-black border border-white"
                                 />
                             </FormControl>
                             <FormMessage
@@ -88,6 +89,7 @@ const RegisterForm = () => {
                                 {...field}
                                 placeholder="John.doe@example.com"
                                 type="email"
+                                className="bg-black border border-white"
                                 />
                             </FormControl>
                             <FormMessage 
@@ -108,6 +110,7 @@ const RegisterForm = () => {
                                 {...field}
                                 placeholder="******"
                                 type="password"
+                                className="bg-black border border-white"
                                 />
                             </FormControl>
                             <FormMessage                           

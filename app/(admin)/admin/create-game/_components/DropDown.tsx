@@ -26,15 +26,20 @@ const DropDown = ({value,onChangeHandler,isGenre}:DropDownProps) => {
             onChangeHandler([...selectedGenres, genre])
         }
     }
+    const handleRemove = (genre: string) => {
+      const newSelectedGenres = selectedGenres.filter(g => g !== genre);
+      setSelectedGenres(newSelectedGenres);
+      onChangeHandler(newSelectedGenres);
+  };
 console.log(selectedGenres)
   return (
 
     <div>
-        <Select  onValueChange={handleSelect} defaultValue="Category" >
+        <Select  onValueChange={handleSelect} defaultValue="Category"  >
         <SelectTrigger>
             <SelectValue placeholder="Category" />
         </SelectTrigger>
-        <SelectContent>
+        <SelectContent className='bg-black'>
              {isGenre ? genreData.map((genre)=>(
                 <SelectItem key={genre} value={genre}  >
                     {genre}
@@ -46,14 +51,18 @@ console.log(selectedGenres)
              )) }   
         </SelectContent>
     </Select>
-    <Button onClick={()=>{}} type='button'>
-        Add Genre
-    </Button>
-    <div>
-        <h3>Selected Genres:</h3>
-        <ul>
+    <div className='flex gap-3 items-center mt-2'>
+        <h3 className='text-lg font-bold'>{isGenre ? "Selected Genres:" : "Selected Platforms:"}</h3>
+        <ul className='flex flex-wrap gap-2 w-full h-auto'>
           {selectedGenres.map((genre) => (
-            <li key={genre}>{genre}</li>
+            <li 
+            className='bg-emerald-500 rounded-md p-2 px-4 cursor-pointer' 
+            key={genre}
+            onClick={()=>handleRemove(genre)}
+            
+            >
+              {genre}
+            </li>
           ))}
         </ul>
       </div>

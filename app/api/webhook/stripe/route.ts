@@ -1,6 +1,7 @@
 import stripe from 'stripe'
 import { NextResponse } from 'next/server'
 import { createBoughtGame, createOrder } from '@/actions/order'
+import { removeGameFromWishlistAfterBuy } from '@/actions/wishlist'
 
 
 export async function POST(request:Request)  {
@@ -29,9 +30,7 @@ export async function POST(request:Request)  {
    if (eventType === 'checkout.session.completed') {
     const { id, amount_total, metadata } = event.data.object;
 
-    console.log("Stripe ID:", id);
-    console.log("Amount Total:", amount_total);
-    console.log("Metadata:", metadata);
+    
 
     const gameIdsString = metadata && metadata.gameIds ? metadata.gameIds : '[]';
 
@@ -44,8 +43,6 @@ export async function POST(request:Request)  {
     }
     const userId = metadata && metadata.userId ? metadata.userId : '';
 
-
-  console.log(gameIds)
      const order = {
         stripeId: id,
         userId: userId,
@@ -72,12 +69,14 @@ export async function POST(request:Request)  {
           gameId: gameId,
         };
        const createdBoughtGame = await createBoughtGame(boughtGame);
+
       if (!createdBoughtGame) {
       console.error('Failed to create a bought game record.');
       // Handle the situation appropriately, maybe return an error response
       return NextResponse.json({ message: 'Failed to create a bought game' }, { status: 500 });
     }
     createdBoughtGames.push(createdBoughtGame);
+    await removeGameFromWishlistAfterBuy(userId,createdBoughtGame.gameId)
   }
   return NextResponse.json({ message: 'OK', order: newOrder, boughtGames: createdBoughtGames })
    }

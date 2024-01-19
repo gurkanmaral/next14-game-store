@@ -23,7 +23,7 @@ const CardWrapper = ({
 
 
   return (
-   <Card className="w-[400px] shadow-dm bg-black">
+   <Card className="border-none  w-[300px] md:w-[400px] shadow-lg shadow-black bg-black">
         <CardHeader>
             <Header label={headerLabel} />
         </CardHeader>

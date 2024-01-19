@@ -8,9 +8,16 @@ const nextConfig = {
       domains:["res.cloudinary.com"]
     },
     serverRuntimeConfig: {
-        // Adjust the body size limit here (in bytes)
-        serverMaxBodySize: 10 * 1024 * 1024, // 10MB
+        serverMaxBodySize: "10mb", // 10MB
       },
+     experimental:{
+      serverActions: {
+        bodySizeLimit: '20mb',
+      },
+     } 
+    
+  
+    
 }
 
 module.exports = nextConfig

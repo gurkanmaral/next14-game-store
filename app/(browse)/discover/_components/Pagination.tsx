@@ -10,6 +10,7 @@ import {
   } from "@/components/ui/pagination"
 
 const PaginationComponent = () => {
+  
   return (
     <Pagination className=" mb-10">
     <PaginationContent>

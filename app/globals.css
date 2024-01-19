@@ -45,8 +45,15 @@ body {
 
 }
 
+.login-bg{
+  background-image: url("/background.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  z-index: 0;
+}
+
 .bg-custom-image {
-  background-image: url("/assas1.jpg");
+  background-image: url("/bg.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   z-index: 0;

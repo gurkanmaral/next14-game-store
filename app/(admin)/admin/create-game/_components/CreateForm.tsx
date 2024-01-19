@@ -12,6 +12,7 @@ import * as z from "zod";
 import DropDown from './DropDown';
 import { createGame } from '@/actions/game';
 import FormSuccess from '@/components/auth/FormSuccess';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
 
 const CreateForm = () => {
     const [files, setFiles] = useState<File[]>([])
@@ -96,7 +97,7 @@ const CreateForm = () => {
                         })
                 })
 
-
+                form.reset();
             } catch (error) {
                 console.log(error)
             }
@@ -105,9 +106,15 @@ const CreateForm = () => {
 
     console.log(files)
   return (
+   <Card className='w-full h-full grid grid-cols-1 bg-black border border-white/15'>
+     <CardHeader>
+            <h1 className='text-3xl font-bold'>Create Game</h1>
+        </CardHeader>
+    <CardContent>
     <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-6'>
-            <FormField
+           <div className='col-span-1 grid grid-cols-1 gap-2'>
+           <FormField
             control={form.control}
             name="title"
             render={({field})=> (
@@ -117,7 +124,7 @@ const CreateForm = () => {
                         <Input 
                         {...field}
                         placeholder='Title'
-
+                        className='bg-black text-white border border-white/15'
                         />
                     </FormControl>
                     <FormMessage
@@ -136,7 +143,7 @@ const CreateForm = () => {
                         <Textarea
                         {...field}
                         placeholder='Description'
-
+                        className='bg-black text-white border border-white/15'
                         />
                     </FormControl>
                     <FormMessage
@@ -145,7 +152,9 @@ const CreateForm = () => {
                 </FormItem>
             )}
             />
-        <FormField
+           </div>
+            <div className='col-span-1 grid grid-cols-1 md:grid-cols-2 gap-2'>
+            <FormField
             control={form.control}
             name="images"
             render={({field})=> (
@@ -157,6 +166,7 @@ const CreateForm = () => {
                         accept='image/*'
                         placeholder='Upload a photo'
                         onChange={(e)=> handleImage(e,field.onChange)}
+                        className='bg-black text-white border border-white/15'
                         />
                     </FormControl>
                     <FormMessage
@@ -178,6 +188,7 @@ const CreateForm = () => {
                         accept='image/*'
                         placeholder='Upload a photo'
                         onChange={(e)=> handleImage(e,field.onChange)}
+                        className='bg-black text-white border border-white/15'
                         />
                     </FormControl>
                     <FormMessage
@@ -186,7 +197,9 @@ const CreateForm = () => {
                 </FormItem>
             )}
             />
-             <FormField
+            </div>
+           <div className='col-span-1 grid grid-cols-1 md:grid-cols-2 gap-2'>
+           <FormField
             control={form.control}
             name="images3"
             render={({field})=> (
@@ -198,6 +211,7 @@ const CreateForm = () => {
                         accept='image/*'
                         placeholder='Upload a photo'
                         onChange={(e)=> handleImage(e,field.onChange)}
+                        className='bg-black text-white border border-white/15'
                         />
                     </FormControl>
                     <FormMessage
@@ -218,6 +232,7 @@ const CreateForm = () => {
                         accept='image/*'
                         placeholder='Upload a photo'
                         onChange={(e)=> handleImage(e,field.onChange)}
+                        className='bg-black text-white border border-white/15'
                         />
                     </FormControl>
                     <FormMessage
@@ -226,7 +241,9 @@ const CreateForm = () => {
                 </FormItem>
             )}
             />
-             <FormField
+           </div>
+           <div className='col-span-1 grid grid-cols-1 md:grid-cols-2 gap-2'>
+           <FormField
             control={form.control}
             name="price"
             render={({field})=> (
@@ -236,7 +253,7 @@ const CreateForm = () => {
                     <Input 
                         {...field}
                         placeholder='Price'
-
+                        className='bg-black text-white border border-white/15'
                         />
                     </FormControl>
                     <FormMessage
@@ -255,7 +272,7 @@ const CreateForm = () => {
                     <Input 
                         {...field}
                         placeholder='Special Price'
-
+                        className='bg-black text-white border border-white/15'
                         />
                     </FormControl>
                     <FormMessage
@@ -264,7 +281,9 @@ const CreateForm = () => {
                 </FormItem>
             )}
             />
-             <FormField
+           </div>
+            <div className='col-span-1 grid grid-cols-1 md:grid-cols-2 gap-2'>
+            <FormField
             control={form.control}
             name="Genres"
             render={({field})=> (
@@ -274,44 +293,6 @@ const CreateForm = () => {
                     <DropDown onChangeHandler={field.onChange} value={field.value} isGenre={true}  />
                     </FormControl>
                     <FormMessage                      
-                />
-                </FormItem>
-            )}
-            />
-            <FormField
-            control={form.control}
-            name="metacritic"
-            render={({field})=> (
-                <FormItem>
-                    <FormLabel>Metacritic Score</FormLabel>
-                    <FormControl>
-                    <Input 
-                        {...field}
-                        placeholder='Score'
-
-                        />
-                    </FormControl>
-                    <FormMessage
-                             
-                />
-                </FormItem>
-            )}
-            />
-             <FormField
-            control={form.control}
-            name="released"
-            render={({field})=> (
-                <FormItem>
-                    <FormLabel>Released Date</FormLabel>
-                    <FormControl>
-                    <Input 
-                        {...field}
-                        placeholder='Score'
-
-                        />
-                    </FormControl>
-                    <FormMessage
-                             
                 />
                 </FormItem>
             )}
@@ -331,6 +312,46 @@ const CreateForm = () => {
                 </FormItem>
             )}
             />
+            </div>
+            <FormField
+            control={form.control}
+            name="metacritic"
+            render={({field})=> (
+                <FormItem>
+                    <FormLabel>Metacritic Score</FormLabel>
+                    <FormControl>
+                    <Input 
+                        {...field}
+                        placeholder='Score'
+                        className='bg-black text-white border border-white/15'
+                        />
+                    </FormControl>
+                    <FormMessage
+                             
+                />
+                </FormItem>
+            )}
+            />
+             <FormField
+            control={form.control}
+            name="released"
+            render={({field})=> (
+                <FormItem>
+                    <FormLabel>Released Date</FormLabel>
+                    <FormControl>
+                    <Input 
+                        {...field}
+                        placeholder='Score'
+                        className='bg-black text-white border border-white/15'
+                        />
+                    </FormControl>
+                    <FormMessage
+                             
+                />
+                </FormItem>
+            )}
+            />
+            
              <FormField
             control={form.control}
             name="developer"
@@ -341,7 +362,7 @@ const CreateForm = () => {
                     <Input 
                         {...field}
                         placeholder='Developer'
-
+                        className='bg-black text-white border border-white/15'
                         />
                     </FormControl>
                     <FormMessage
@@ -356,6 +377,8 @@ const CreateForm = () => {
             </Button>
         </form>
     </Form>
+    </CardContent>
+   </Card>
   )
 }
 

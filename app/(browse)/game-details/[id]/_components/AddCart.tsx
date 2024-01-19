@@ -2,20 +2,27 @@
 
 
 import { Button } from '@/components/ui/button'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useCartStore } from '@/lib/redux/store';
+import Link from 'next/link';
 import React, { useEffect } from 'react'
 import { toast } from 'sonner';
 import { number } from 'zod';
+import RatingCard from './RatingCard';
+
+import CheckoutButton from '@/app/(browse)/cart/_components/CheckoutButton';
 
 interface AddCartProps {
     price:string;
     gameImage:string;
     gameTitle:string;
-    gameId:string
+    gameId:string;
+    alreadyBought:boolean;
+    userId:string;
 }
 
 const AddCart = ({price,gameImage,gameTitle,
-gameId}:AddCartProps) => {
+gameId,alreadyBought,userId}:AddCartProps) => {
 
     const {addtoCart,games,removeFromCart} = useCartStore();
 
@@ -49,22 +56,25 @@ console.log(games)
        }
     }
 
+const game = [
+    {
+        gameId:gameId,
+        gameImage:gameImage,
+        gameTitle:gameTitle,
+        price:numberPrice,
+    }
+]
+   
 
   return (
     <div className='col-span-1 flex flex-col gap-5 px-4'>
-        <h1 className='text-3xl font-bold'>
+                <h1 className='text-3xl font-bold'>
                     {price}$
                 </h1>
-               <Button size="lg" >
-                Buy Now
-               </Button>
-                <Button size="lg" onClick={handleCart} >
-                   Add to cart
-                </Button>       
-                <Button size="sm" onClick={handleCart} >
-                    Add to wishlist
-                </Button>      
-        
+                <CheckoutButton games={game}  alreadyBought={alreadyBought}/>
+                <Button size="lg" onClick={handleCart} disabled={alreadyBought} className='bg-red-500 text-white hover:bg-red-400 shadow-sm shadow-white/15' >
+                {alreadyBought ? "You own this game" :"Add to Cart"}
+                </Button>
     </div>
   )
 }

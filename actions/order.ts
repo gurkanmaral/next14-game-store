@@ -21,7 +21,6 @@ export type GameInfo = {
     gameId: string;
     price: number;
     userId: string;
-    gameImage: string;
   };
 
 

@@ -26,8 +26,8 @@ const NavItem = ({
     
 
   return (
-    <Button asChild variant="ghost" className={cn("w-full h-12", collapsed ? "justify-center":"justify-start",
-    isActive && "bg-accent")}>
+    <Button asChild variant="sidebarButton" className={cn("w-full h-12", collapsed ? "justify-center":"justify-start",
+    isActive && "bg-[#303030] shadow-sm shadow-black/20")}>
         <Link href={href}>
             <div className='flex items-center gap-x-4'>
                 <Icon 

@@ -3,7 +3,14 @@
 import { useState } from "react";
 import TopSellersCard from "./TopSellersCard";
 import { Separator } from "@/components/ui/separator";
+import { Poppins } from "next/font/google";
+import { cn } from "@/lib/utils";
 
+const font = Poppins({
+    subsets: ["latin"],
+    weight: ["100", "300", "400", "700", "900"],
+  });
+  
 const data = [
     {
         id:0,
@@ -32,26 +39,39 @@ const data = [
     },
 ]
 
-const TopSellers = () => {
+interface SliderProps {
+    games:SliderGameProps[];
+  }
+  
+  interface SliderGameProps {
+    id:string;
+    title:string;
+    allImages:string[];
+    description:string;
+    SpecialPrice:string;
+    price:string;
+  }
+
+const TopSellers = ({ games }:SliderProps) => {
     const [active,setActive] = useState(2);
 
 
   return (
-    <div className='w-full max-w-[1300px] flex flex-col gap-3'>
+    <div className='w-full max-w-[1300px] flex flex-col '>
         <div>
-            <h1>Top Sellers</h1>
+            <h1 className={cn("text-2xl font-bold",font.className)}>Top Sellers</h1>
         </div>
-        <Separator />
-        <div className='mt-5 flex flex-row min-h-[70vh] gap-3'>
-            {data.map((item,index)=>(
+        <Separator className="my-2" />
+        <div className='flex flex-row min-h-[70vh] gap-3 pt-2'>
+            {games.map((item,index)=>(
                 <TopSellersCard 
                 key={item.id}
-                item={item.image}
+                item={item.allImages[0]}
                 index={index}
                 active={active}
                 setActive={setActive}
                 id={item.id}
-                name={item.name}
+                name={item.title}
                 />
             ))}
         </div>

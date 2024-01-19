@@ -35,7 +35,8 @@ const Search = () => {
          value={value}
          onChange={(e) => setValue(e.target.value)}
         placeholder="Search"
-        className="rounded-r-none focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0"
+        className="rounded-r-none focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0
+        bg-black color-white border-white/15"
         />
         {value && (
         <X
@@ -45,9 +46,8 @@ const Search = () => {
       )}
         <Button type="submit"
         size="sm"
-        variant="secondary"
-        className="rounded-l-none">
-               <SearchIcon className="h-5 w-5 text-muted-foreground" />
+        className="rounded-l-none ">
+               <SearchIcon className="h-5 w-5 text-black" />
         </Button>
     </form>
   )

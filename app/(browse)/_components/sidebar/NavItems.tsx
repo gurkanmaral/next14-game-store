@@ -2,12 +2,15 @@
 import { useSidebar } from '@/store/use-sidebar';
 import NavItem, { NavItemSkeleton } from './NavItem'
 import { cn } from '@/lib/utils';
-import { Compass, Home, User } from 'lucide-react';
+import { Compass, Home, User,Users,Settings } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import { useIsClient } from 'usehooks-ts';
+import { useCurrentUser } from '@/hooks/useCurrentUser';
 
 const NavItems = () => {
+    const user = useCurrentUser();
 
+   
     const pathname = usePathname();
 
     const { collapsed } = useSidebar((state) => state);
@@ -32,13 +35,23 @@ const NavItems = () => {
         },
         {
             label:"Profile",
-            href:`/username`,
+            href:`/${user?.id}`,
             icon:User,
         },
         {
             label:"Discover",
             href:"/discover",
             icon:Compass,
+        },
+        {
+            label:"Users",
+            href:"/users",
+            icon:Users,
+        },
+        {
+            label:"Settings",
+            href:"/settings",
+            icon:Settings,
         }
     ]
 

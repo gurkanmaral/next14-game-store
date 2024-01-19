@@ -23,6 +23,7 @@ const INITIAL_STATE = {
 export type ActionTypes = {
     addtoCart : (item:CartItemType)=>void;
     removeFromCart:(item:CartItemType)=>void;
+    resetCart: ()=>void;
 }
 export const useCartStore = create(persist<CartTypes & ActionTypes>((set,get)=>({
    
@@ -49,6 +50,13 @@ export const useCartStore = create(persist<CartTypes & ActionTypes>((set,get)=>(
             games: state.games.filter((game) => game.gameId !== gameId),
             totalItems: state.totalItems - 1, 
             totalPrice: state.totalPrice - price,
+        }))
+    },
+    resetCart(){
+        set(()=>({
+            games:INITIAL_STATE.games,
+            totalItems: INITIAL_STATE.totalItems,
+            totalPrice: INITIAL_STATE.totalPrice,
         }))
     }
 

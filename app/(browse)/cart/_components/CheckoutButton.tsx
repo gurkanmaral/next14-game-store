@@ -4,9 +4,11 @@ import { Button } from '@/components/ui/button'
 import React from 'react'
 import Checkout from './Checkout'
 import { useCurrentUser } from '@/hooks/useCurrentUser';
+import { useRouter } from 'next/navigation';
 
 type GamesProps = {
-    games: GameProps[]
+    games: GameProps[];
+    alreadyBought?:boolean;
 }
 
 type GameProps = {
@@ -17,18 +19,20 @@ type GameProps = {
 
 }
 
-const CheckoutButton = ({games}:GamesProps) => {
+const CheckoutButton = ({games,alreadyBought}:GamesProps) => {
 
-
+  const router = useRouter();
 
     const user = useCurrentUser();
 
-    console.log(user)
-    
+    if(!user){
+      router.push("/auth/login")
+    }
+ 
 
   return (
-    <Button asChild>
-        <Checkout games={games}  userId={user?.id} />
+    <Button asChild disabled={alreadyBought}>
+        <Checkout games={games}  userId={user?.id ?? ""}  alreadyBought={alreadyBought ?? false}/>
     </Button>
   )
 }
