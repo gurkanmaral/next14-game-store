@@ -19,7 +19,7 @@ const Actions =async () => {
               </Button>
             </LoginButton>
             <div>
-             <ShoppingCart className='w-5 h-5 cursor-pointer' />
+            <CartBox />     
             </div>
           </div>
         )}

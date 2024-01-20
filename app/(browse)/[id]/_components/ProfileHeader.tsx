@@ -12,7 +12,7 @@ interface ProfileHeaderProps {
     isSelf:boolean;
     isFollowing:boolean;
     userId:string;
-    selfId:string;
+    selfId?:string;
 }
 
 const ProfileHeader = async({image,name,isSelf,isFollowing,userId,selfId}:ProfileHeaderProps) => {

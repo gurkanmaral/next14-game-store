@@ -3,6 +3,11 @@ export const publicRoutes = [
     "/auth/new-verification",
     "/auth/new-password",
     '/api/webhook/stripe',
+    "/discover",
+    "/api/getGames",
+    "/users",
+    "/game-details/[id]",
+    "/[id]"
 ];
 
 export const authRoutes = [

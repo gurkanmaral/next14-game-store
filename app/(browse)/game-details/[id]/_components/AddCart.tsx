@@ -11,6 +11,7 @@ import { number } from 'zod';
 import RatingCard from './RatingCard';
 
 import CheckoutButton from '@/app/(browse)/cart/_components/CheckoutButton';
+import { useRouter } from 'next/navigation';
 
 interface AddCartProps {
     price:string;
@@ -18,7 +19,7 @@ interface AddCartProps {
     gameTitle:string;
     gameId:string;
     alreadyBought:boolean;
-    userId:string;
+    userId?:string;
 }
 
 const AddCart = ({price,gameImage,gameTitle,
@@ -26,18 +27,20 @@ gameId,alreadyBought,userId}:AddCartProps) => {
 
     const {addtoCart,games,removeFromCart} = useCartStore();
 
-    useEffect(()=>{
+    const router = useRouter();
 
-    },[])
+
 
     const numberPrice = parseFloat(price)
-console.log(games)
+
     
     const isAlreadyInCart = games.some((game)=>game.gameId === gameId)
 
-    console.log(isAlreadyInCart)
-    const handleCart = () => {
+   
 
+    
+    const handleCart = () => {
+      
        if(isAlreadyInCart) {
             removeFromCart({
                 gameId:gameId,
@@ -64,14 +67,17 @@ const game = [
         price:numberPrice,
     }
 ]
-   
-
   return (
     <div className='col-span-1 flex flex-col gap-5 px-4'>
                 <h1 className='text-3xl font-bold'>
                     {price}$
                 </h1>
-                <CheckoutButton games={game}  alreadyBought={alreadyBought}/>
+                {userId ? <CheckoutButton games={game}   alreadyBought={alreadyBought}/> : 
+                <Button asChild>
+                    <Link href="/auth/login">
+                        Buy
+                    </Link>
+                </Button>}
                 <Button size="lg" onClick={handleCart} disabled={alreadyBought} className='bg-red-500 text-white hover:bg-red-400 shadow-sm shadow-white/15' >
                 {alreadyBought ? "You own this game" :"Add to Cart"}
                 </Button>

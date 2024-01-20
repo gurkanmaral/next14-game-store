@@ -9,6 +9,7 @@ import { useRouter } from 'next/navigation';
 type GamesProps = {
     games: GameProps[];
     alreadyBought?:boolean;
+    numberPrice?:number;
 }
 
 type GameProps = {
@@ -19,20 +20,17 @@ type GameProps = {
 
 }
 
-const CheckoutButton = ({games,alreadyBought}:GamesProps) => {
+const CheckoutButton = ({games,alreadyBought,numberPrice}:GamesProps) => {
 
-  const router = useRouter();
+
 
     const user = useCurrentUser();
-
-    if(!user){
-      router.push("/auth/login")
-    }
- 
+    
+  
 
   return (
     <Button asChild disabled={alreadyBought}>
-        <Checkout games={games}  userId={user?.id ?? ""}  alreadyBought={alreadyBought ?? false}/>
+        <Checkout games={games}  userId={user?.id}  alreadyBought={alreadyBought ?? false}/>
     </Button>
   )
 }

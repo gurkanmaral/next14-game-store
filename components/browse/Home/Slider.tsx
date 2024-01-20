@@ -29,7 +29,7 @@ const Slider = ({games}:SliderProps) => {
 
 
 
-  console.log(games)
+ 
   return (
     <Carousel className="w-full max-w-7xl border-none hidden md:block">
     <CarouselContent>

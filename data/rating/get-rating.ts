@@ -38,6 +38,7 @@ export const getGameRatingByUser = async(gameId:string) => {
     try {
         const self = await getSelf();
 
+        
         const game = await db.game.findUnique({
             where:{
                 id:gameId

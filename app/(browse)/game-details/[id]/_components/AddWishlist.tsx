@@ -7,7 +7,7 @@ import { toast } from 'sonner';
 
 interface AddWishlistProps {
     isWishlist:boolean;
-    userId:string;
+    userId?:string;
     gameId:string;
 }
 

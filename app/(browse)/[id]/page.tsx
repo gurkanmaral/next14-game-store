@@ -25,17 +25,16 @@ const UserPage = async ({params}:UserPageProps) => {
 
 
 
-  if(!self) {
-    return null;
-  }
-
  
 if(!user) {
     notFound();
 }
 
+let isSelf
 
-const isSelf = params.id === self.id;
+if(self) {
+  isSelf = params.id === self?.id;
+}
 
 const isFollowing = await isFollowingUser(user?.id ?? "");
 
@@ -52,7 +51,7 @@ const isFollowing = await isFollowingUser(user?.id ?? "");
        isSelf={isSelf} 
        isFollowing={isFollowing}
        userId={user.id}
-       selfId={self.id}
+       selfId={self?.id}
        />
        <div className="">
         <ProfileLink userId={user.id} />

@@ -8,12 +8,13 @@ import { toast } from 'sonner';
 interface FollowButtonProps {
     isFollowing:boolean;
     userId:string;
-    selfId:string;
+    selfId?:string;
 }
 
 const FollowButton = ({isFollowing,userId,selfId}:FollowButtonProps) => {
     const [isPending, startTransition] = useTransition();
     const router = useRouter();
+
 
     const handleFollow = () => {
         startTransition(()=>{
@@ -31,8 +32,8 @@ const FollowButton = ({isFollowing,userId,selfId}:FollowButtonProps) => {
     }
 
     const toggleFollow = () => {
-        if (!userId) {
-            return router.push("/sign-in");
+        if (!selfId) {
+            return router.push("/auth/login");
           }
 
           if (isFollowing) {

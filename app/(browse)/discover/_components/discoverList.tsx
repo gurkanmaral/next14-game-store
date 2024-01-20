@@ -38,6 +38,9 @@ const [sortOption, setSortOption] = useState<'Alpha' | 'lowToHigh' | 'highToLow'
 
              const response = await fetch(`/api/getGames?genre=${genres}`);
              const data = await response.json();
+             if (!response.ok) {
+              throw new Error(`Request failed with status: ${response.status}`);
+            }
              console.log(data)
              setGames(data);
         } catch (error) {

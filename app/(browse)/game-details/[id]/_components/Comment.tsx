@@ -4,12 +4,12 @@ import Link from 'next/link';
 
 interface CommentProp {
     comment:CommentProps;
-    userId:string;
+    userId?:string;
 }
 
 type CommentProps = {
     id:string;
-    userId: string;
+    userId?: string;
     gameId: string;
     review: string;
     parentId: string | null;
@@ -33,9 +33,13 @@ type CommentUser ={
   
   }
 const Comment = async({comment,userId}:CommentProp) => {
+  let isLiked = false;
 
-    const isLiked = await getCommentLikeByUser(userId,comment.id)
-    console.log(comment)
+  
+    if (userId) {      
+        isLiked = await getCommentLikeByUser(userId, comment.id);
+    }
+   
 
   return (
     <div className='bg-black col-span-1 rounded-lg p-4 grid grid-cols-8 shadow-md shadow-white/15'>

@@ -47,7 +47,7 @@ const RatingCard = ({gameId,rating}:RatingCardProps) => {
         }
       };
       const colorClass = getRatingColorClass(rating);
-    console.log(selectedRating)
+ 
   return (
     <div className='col-span-1 flex flex-col gap-5 px-4'>
         {rating ? (

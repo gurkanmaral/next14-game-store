@@ -10,14 +10,14 @@ import AddComment from './AddComment';
 import { Separator } from '@/components/ui/separator';
 
 interface CommentsProps {
-    userId:string;
+    userId?:string;
     gameId:string;
     comments:CommentProps[];
 }
 
 type CommentProps = {
   id:string;
-  userId: string;
+  userId?: string;
   gameId: string;
   review: string;
   parentId: string | null;
@@ -35,7 +35,7 @@ type CommentUser ={
 
 type CommentLikes = {
   id:string;
-  userId:string;
+  userId?:string;
   commentId:string;
   createdAt: string;
 

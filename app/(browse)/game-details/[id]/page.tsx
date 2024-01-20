@@ -32,31 +32,31 @@ const GameDetails = async({params}:GameDetailsParams) => {
     const game = await getGameById(params.id);
     const user = await currentUser();
 
-    if(!user) {
-        return null
-    }
-    const comments = await getCommentsByGameId(params.id);
-    const isFavorite = await isGameFavoriteByUser(user.id,params.id)
-    const isWishlist = await isGameInWishlist(user.id,params.id)
-    const recommendedGamesArray = await recommendedGames(params.id)
-
-  
-
-    if(!user) {
-      return null;
-    }
-
-   
     if(!game) {
         return (
             <div>
-                asdasd
+               No game found
             </div>
         )
     }
+    const comments = await getCommentsByGameId(params.id);
 
-    const order = await getOrderByUserId(user?.id,params.id)
-    const rating = await getGameRatingByUser(params.id)
+    let isFavorite = false;
+    let isWishlist = false;
+
+    if (user) {
+        isFavorite = await isGameFavoriteByUser(user.id, params.id);
+        isWishlist = await isGameInWishlist(user.id, params.id);
+      }
+      
+    const recommendedGamesArray = await recommendedGames(params.id)
+
+
+   
+    
+
+    const order = user ? await getOrderByUserId(user.id, params.id) : null; 
+    const rating = user ? await getGameRatingByUser(params.id) : null;
     const averageRating = await getAverageRatingOfGame(params.id);
 
 
@@ -130,7 +130,7 @@ const GameDetails = async({params}:GameDetailsParams) => {
                 </div>
            </div>
             <div>
-               <Comments comments={comments} userId={user.id} gameId={params.id}/>
+               <Comments comments={comments} userId={user?.id} gameId={params.id}/>
             </div>
             <div className='mb-20'>
                     <RecommendedGames recommendedGamesArray={recommendedGamesArray || []} />
@@ -144,14 +144,14 @@ const GameDetails = async({params}:GameDetailsParams) => {
                     gameTitle={game.title}
                     gameId={game.id}
                     alreadyBought={alreadyBought}
-                    userId={user.id}
+                    userId={user?.id}
                     />
                 </div>
                 <div>
-                    <AddWishlist gameId={params.id} userId={user.id} isWishlist={isWishlist} />
+                    <AddWishlist gameId={params.id} userId={user?.id} isWishlist={isWishlist} />
                 </div>
                 <div>
-                    <AddFavorites gameId={params.id} userId={user.id} isFavorite={isFavorite} />
+                    <AddFavorites gameId={params.id} userId={user?.id} isFavorite={isFavorite} />
                 </div>
                 <div>
                     <RatingCard gameId={params.id} rating={rating} />

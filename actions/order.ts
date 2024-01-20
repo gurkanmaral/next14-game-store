@@ -58,13 +58,13 @@ export const checkoutOrder = async (orders: CheckoutOrderParams,totalAmount:numb
     const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
   
     
-    const price = Number(totalAmount) * 100;
+   
     
     try {
         const lineItems = orders.map(order => ({
           price_data: {
             currency: 'usd',
-            unit_amount: order.price * 100, 
+            unit_amount: Math.floor(order.price * 100),
             product_data: {
               name: order.gameTitle,
             },

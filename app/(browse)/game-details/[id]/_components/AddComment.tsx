@@ -4,11 +4,12 @@
 import { addCommentToGame } from '@/actions/comment';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
+import { useRouter } from 'next/navigation';
 import React, { useState, useTransition } from 'react'
 import { toast } from 'sonner';
 
 interface AddCommentProps {
-    userId:string;
+    userId?:string;
     gameId:string;
 }
 
@@ -17,8 +18,14 @@ const AddComment = ({userId,gameId}:AddCommentProps) => {
     const [comment, setComment] = useState("");
     const [isPending,startTransition] = useTransition();
 
+const router = useRouter();
 
     const handleAddingComment = () => {
+
+      if(!userId) {
+        router.push("/auth/login")
+      }
+
         startTransition(()=>{
             addCommentToGame(userId,gameId,comment)
                 .then((data)=> {
