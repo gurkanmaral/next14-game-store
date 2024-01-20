@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useEffect, useState } from 'react'
 import DiscoverCard from './discoverCard'
 import { getFilteredGames } from '@/data/game/get-details';
@@ -18,6 +17,8 @@ interface DiscoverListGameProps {
   platforms:string[];
   Genres:string[];
 }
+
+
 
 const DiscoverList = () => {
 
@@ -71,10 +72,13 @@ const sortGames = (games:DiscoverListGameProps[], sortOption: 'Alpha' | 'lowToHi
   }
 }
 
+let filteredGames = [];
 
-const filteredGames = games?.filter(game =>
-  selectedPlatforms.length === 0 || game.platforms.some((platform: string) => selectedPlatforms.includes(platform))
-);
+if(games) {
+  filteredGames = games?.filter(game =>
+    selectedPlatforms.length === 0 || game.platforms.some((platform: string) => selectedPlatforms.includes(platform))
+  );
+}
 
 const sortedAndFilteredGames = sortGames(filteredGames, sortOption);
 

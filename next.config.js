@@ -8,7 +8,7 @@ const nextConfig = {
       domains:["res.cloudinary.com"]
     },
     serverRuntimeConfig: {
-        serverMaxBodySize: "10mb", // 10MB
+        serverMaxBodySize: "10mb", 
       },
      experimental:{
       serverActions: {

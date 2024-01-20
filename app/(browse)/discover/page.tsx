@@ -18,7 +18,8 @@ const font = Poppins({
     () => import('./_components/discoverList'),
     { ssr: false }
   );
-const Discover = async() => {
+const Discover = () => {
+
 
 
   // const games = await getFilteredGames()
