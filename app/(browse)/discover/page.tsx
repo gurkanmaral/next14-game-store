@@ -6,6 +6,8 @@ import { Poppins } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { getFilteredGames } from '@/data/game/get-details';
 
+export const dynamic = 'force-dynamic'
+
 const font = Poppins({
     subsets: ["latin"],
     weight: ["100", "300", "400", "700", "900"],

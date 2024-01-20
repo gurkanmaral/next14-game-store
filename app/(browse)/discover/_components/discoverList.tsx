@@ -6,8 +6,6 @@ import { getFilteredGames } from '@/data/game/get-details';
 import Filters from './filters';
 import { Loader } from 'lucide-react';
 
-export const dynamic = "force-dynamic"
-
 interface DiscoverListProps {
   games:DiscoverListGameProps[];
 }
@@ -23,12 +21,13 @@ interface DiscoverListGameProps {
 
 const DiscoverList = () => {
 
-  const [games, setGames] = useState<DiscoverListGameProps[]>([]);
+  const [games, setGames] = useState([]);
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10); 
 const [genres,setGenres] = useState("All"); 
 const [selectedPlatforms, setSelectedPlatforms] = useState<string[]>([]);
 const [sortOption, setSortOption] = useState<'Alpha' | 'lowToHigh' | 'highToLow'>('Alpha');
+
 
   const [loading, setLoading] = useState(false);
 
@@ -119,3 +118,4 @@ const sortedAndFilteredGames = sortGames(filteredGames, sortOption);
 }
 
 export default DiscoverList
+
