@@ -40,7 +40,7 @@ const baseUrl = process.env.NEXT_PUBLIC_APP_URL
     const fetchGames = async () => {
         setLoading(true);
         try {
-          const response = await fetch(`${baseUrl}/api/getGames?genre=${genres}`);
+          const response = await fetch(`${baseUrl}/api/getGames?genre=All`);
           if (!response.ok) {
             throw new Error(`Request failed with status: ${response.status}`);
           }
