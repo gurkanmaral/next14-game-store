@@ -4,9 +4,11 @@ import DiscoverCard from './discoverCard'
 import { getFilteredGames } from '@/data/game/get-details';
 import Filters from './filters';
 import { Loader } from 'lucide-react';
-
+import qs from 'query-string';
+import { useRouter } from 'next/navigation';
 interface DiscoverListProps {
   games:DiscoverListGameProps[];
+ 
 }
 interface DiscoverListGameProps {
   id:string;
@@ -20,9 +22,11 @@ interface DiscoverListGameProps {
 
 
 
-const DiscoverList = () => {
+const DiscoverList = ({games}:DiscoverListProps) => {
 
-  const [games, setGames] = useState([]);
+ 
+
+  // const [games, setGames] = useState([]);
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10); 
 const [genres,setGenres] = useState("All"); 
@@ -31,59 +35,45 @@ const [sortOption, setSortOption] = useState<'Alpha' | 'lowToHigh' | 'highToLow'
 
 
   const [loading, setLoading] = useState(false);
-
+  const router = useRouter();
   console.log(games)
 
 const baseUrl = process.env.NEXT_PUBLIC_APP_URL
 
-const fetchAllGames = async () => {
-  setLoading(true);
-  try {
-    const response = await fetch(`${baseUrl}/api/getGames`, { cache: 'no-store' });
-    if (!response.ok) {
-      throw new Error(`Request failed with status: ${response.status}`);
-    }
-    const data = await response.json();
-    console.log(data, "data");
-    setGames(data);
-  } catch (error) {
-    console.error('Error fetching games:', error);
-  } finally {
-    setLoading(false);
-  }
-};
-
-useEffect(() => {
-  fetchAllGames();
-}, [baseUrl]);
-
 const handleGenreChange = (newGenre) => {
-  setGenres(newGenre);
-  if (newGenre === "All") {
-   
-    fetchAllGames();
-  } else {
-    
-    const fetchGamesByGenre = async () => {
-      setLoading(true);
-      try {
-        const response = await fetch(`${baseUrl}/api/getGames?genre=${newGenre}`, { cache: 'no-store' });
-        if (!response.ok) {
-          throw new Error(`Request failed with status: ${response.status}`);
-        }
-        const data = await response.json();
-        console.log(data, "data");
-        setGames(data);
-      } catch (error) {
-        console.error(`Error fetching games for genre ${newGenre}:`, error);
-      } finally {
-        setLoading(false);
-      }
-    };
+  // Construct a URL with the 'cat' query parameter
+  setGenres(newGenre)
+  const url = qs.stringifyUrl({
+    url: '/discover',
+    query: { genre: newGenre },
+  }, { skipEmptyString: true });
 
-    fetchGamesByGenre();
-  }
+  // Use router.push to navigate to the constructed URL
+  router.push(url);
 };
+
+//   useEffect(() => {
+//     const fetchGames = async () => {
+//         setLoading(true);
+//         try {
+//           const response = await fetch(`${baseUrl}/api/getGames?genre=${genres}`,{ cache: 'no-store' });
+//           if (!response.ok) {
+//             throw new Error(`Request failed with status: ${response.status}`);
+//           }
+//           const data = await response.json();
+//           console.log(data,"data")        
+//             setGames(data);         
+//         } catch (error) {
+//           console.error('Error fetching games:', error);
+//         } finally {
+//           setLoading(false);
+//         }
+//     };
+
+//     fetchGames();
+// }, [genres,baseUrl]);
+
+
 
 const sortGames = (games:DiscoverListGameProps[], sortOption: 'Alpha' | 'lowToHigh' | 'highToLow') => {
   switch(sortOption) {

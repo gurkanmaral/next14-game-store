@@ -20,7 +20,7 @@ export async function GET( req: NextRequest,
      
     try {
         
-       
+        //this doesnt work on vercel deployment
         const {searchParams} = new URL(req.url)
 
         const genre = searchParams.get("genre")

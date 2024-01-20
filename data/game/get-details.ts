@@ -82,22 +82,43 @@ export const getGameDetailsInLibrary = async (id:string) => {
     }
 }
 
-export const getFilteredGames = async () => {
+export const getFilteredGames = async (genre?:string) => {
 
+
+
+let games;
     try {
         
+        if(!genre || genre === "All") {
+            games = await db.game.findMany({
+                select:{
+                    id:true,
+                    title:true,
+                    allImages:true,
+                    SpecialPrice:true,
+                    platforms:true,
+                    price:true,
+                }
+            })
+        }else{
+             games = await db.game.findMany({
+                where:{
+                    Genres:{
+                        has:genre
+                    }
+                },
+                select:{
+                    id:true,
+                    title:true,
+                    allImages:true,
+                    SpecialPrice:true,
+                    platforms:true,
+                    price:true,
+                }
+            })
+        }
 
-        const games = await db.game.findMany({
-            
-            select:{
-                id:true,
-                title:true,
-                allImages:true,
-                SpecialPrice:true,
-                platforms:true,
-                price:true,
-            }
-        })
+       
         return games;
     } catch (error) {
         return null;
