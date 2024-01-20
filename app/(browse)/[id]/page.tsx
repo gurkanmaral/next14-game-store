@@ -1,4 +1,4 @@
-import { getUserbyId } from "@/data/auth/user";
+import { getUserFavoriteCount, getUserFavoriteGames, getUserGameCount, getUserReviewCount, getUserWishlistCount, getUserbyId } from "@/data/auth/user";
 import ProfileHeader from "./_components/ProfileHeader";
 import ProfileLinks from "./_components/ProfileLinks";
 import { notFound } from "next/navigation";
@@ -23,25 +23,22 @@ const UserPage = async ({params}:UserPageProps) => {
   const self = await currentUser();
   const user = await getUserbyId(params.id);
 
-
-
  
 if(!user) {
     notFound();
 }
 
-let isSelf
+const isSelf = self ? user.id === self.id : false;
 
-if(self) {
-  isSelf = params.id === self?.id;
-}
-
-const isFollowing = await isFollowingUser(user?.id ?? "");
+const isFollowing = await isFollowingUser(user?.id)
 
 
-
-
-
+const [gameCount, wishlishCount, favoriteGamesCount, reviewCount] = await Promise.all([
+  getUserGameCount(user?.id),
+  getUserWishlistCount(user?.id),
+  getUserFavoriteGames(user?.id),
+  getUserReviewCount(user?.id)
+]);
 
   return (
     <div className='pt-10 max-w-screen-lg mx-auto gap-10 flex flex-col items-center backdropmask'>
@@ -57,12 +54,12 @@ const isFollowing = await isFollowingUser(user?.id ?? "");
         <ProfileLink userId={user.id} />
        </div>
         <div className="flex gap-4">
-         <ProfileGameCount  gameCount={user.gamesCount}  userId={user.id} />
-         <ProfileReviewCount commentCount={user.commentsCount} userId={user.id} />
-         <ProfileWishlistCount wishlistGames={user.wishlistGamesCount} userId={user.id}/>
+         <ProfileGameCount  gameCount={gameCount}  userId={user.id} />
+         <ProfileReviewCount commentCount={reviewCount} userId={user.id} />
+         <ProfileWishlistCount wishlistGames={wishlishCount} userId={user.id}/>
         </div>
       <div className="max-w-[1000px] mt-5 mb-10">
-        <FavoriteGames favorites={user.favoriteGames ?? []} isSelf={isSelf}/>
+        <FavoriteGames favorites={favoriteGamesCount} isSelf={isSelf}/>
       </div>
     </div>
   )

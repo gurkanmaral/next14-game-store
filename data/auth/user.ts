@@ -22,59 +22,81 @@ export const getUserbyId = async (id:string) => {
             where:{
                 id
             },
-            include:{
-                orders:{
-                    include:{
-                        boughtGames:{
-                            select: {
-                                gameId: true 
-                            }
-                        }
-                    }
-                },
-                favoriteGames:{
-                  select:{
-                    id:true,
-                    title:true,
-                    allImages:true,
-                  }
-                },
-                wishlistGames:{
-                    select:{
-                        id:true,
-                        title:true,
-                        allImages:true,
-                      }
-                }
-            }
         })
-       
-        let gamesCount = 0;
-        user?.orders.forEach(order => {
-            gamesCount += order.boughtGames.length;
-        });
-
-        const commentsCount = await db.comment.count({
-            where: { userId: id }
-        });
-
-        const wishlistGamesCount = await db.game.count({
-            where:{
-                usersWishlist:{
-                    some:{
-                        id:id
-                    }
-                }
-            }
-        })
+        if (!user) {
+            return null;
+        }
         
-        return {
-            ...user,
-            gamesCount,
-            commentsCount,
-            wishlistGamesCount,
-        };
+        return user;
+        
     } catch (error) {
         return null;
     }
 }
+
+export const getUserGameCount = async (userId: string) => {
+    try {
+        const count = await db.order.count({
+            where: { userId },
+        });
+        return count;
+    } catch (error) {
+        console.error("Error getting user game count:", error);
+        return 0;
+    }
+};
+export const getUserWishlistCount = async (userId: string) => {
+    try {
+       
+        const count = await db.game.count({
+            where: {
+                usersWishlist: {
+                    some: {
+                        id: userId
+                    }
+                }
+            }
+        });
+        return count;
+    } catch (error) {
+        console.error("Error getting user wishlist count:", error);
+        return 0;
+    }
+};
+export const getUserReviewCount = async (userId: string) => {
+    try {
+       
+        const reviewCount = await db.comment.count({
+            where: {
+                userId: userId
+            }
+        });
+        return reviewCount;
+    } catch (error) {
+        console.error("Error getting user review count:", error);
+        return 0;
+    }
+};
+
+export const getUserFavoriteGames = async (userId: string) => {
+    try {
+        const favoriteGames = await db.game.findMany({
+            where: {
+                usersFavorites: {
+                    some: {
+                        id: userId
+                    }
+                }
+            },
+            select: {
+                id: true,
+                title: true,
+                allImages: true
+            }
+        });
+        return favoriteGames;
+    } catch (error) {
+        console.error("Error getting user favorite games:", error);
+        return [];
+    }
+};
