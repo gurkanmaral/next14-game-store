@@ -6,8 +6,8 @@ export const publicRoutes = [
     "/discover",
     "/api/getGames",
     "/users",
-    "/game-details/[id]",
-    "/[id]"
+    "/game-details/:id",
+    "/:id",
 ];
 
 export const authRoutes = [

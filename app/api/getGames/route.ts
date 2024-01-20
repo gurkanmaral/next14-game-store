@@ -21,15 +21,15 @@ export async function GET( req: NextRequest,
     try {
         
         //this doesnt work on vercel deployment
-        const {searchParams} = new URL(req.url)
+        // const {searchParams} = new URL(req.url)
 
-        const genre = searchParams.get("genre")
+        // const genre = searchParams.get("genre")
       
 
-        let games;
+        // let games;
 
-    if (genre === 'All' || !genre) {
-      games = await db.game.findMany({
+     
+      const games = await db.game.findMany({
         select: {
           id: true,
           title: true,
@@ -39,25 +39,25 @@ export async function GET( req: NextRequest,
           price: true,
         }
       });
-    } else {
+    // } else {
     
-      games = await db.game.findMany({
-        where: {
-          Genres: {
-            has: genre
-          }
-        },
-        select: {
-          id: true,
-          title: true,
-          allImages: true,
-          SpecialPrice: true,
-          platforms: true,
-          price: true,
-          Genres:true,
-        }
-      });
-    }
+    //   games = await db.game.findMany({
+    //     where: {
+    //       Genres: {
+    //         has: genre
+    //       }
+    //     },
+    //     select: {
+    //       id: true,
+    //       title: true,
+    //       allImages: true,
+    //       SpecialPrice: true,
+    //       platforms: true,
+    //       price: true,
+    //       Genres:true,
+    //     }
+    //   });
+    // }
 
     return NextResponse.json(games, {
       status: 200

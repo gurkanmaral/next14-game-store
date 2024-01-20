@@ -45,9 +45,9 @@ const gamesDetails = await Promise.all(
           <div className="">
             <ProfileLink userId={user.id} />
           </div>
-          <div className='grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 p-4 mt-10 gap-2 '>
+          <div className='grid  grid-cols-1 md:grid-cols-3 lg:grid-cols-4 p-4 mt-10 gap-2 '>
               {gamesDetails.length === 0 ? (
-              <div className='text-5xl font-bold text-center w-full col-span-3 mt-10 '>
+              <div className=' text-5xl font-bold text-center w-full col-span-1 md:col-span-3 lg:col-span-4 mt-10'>
                   <h1>No Games in users library.</h1>
               </div>) 
               : gamesDetails?.map((item)=>(

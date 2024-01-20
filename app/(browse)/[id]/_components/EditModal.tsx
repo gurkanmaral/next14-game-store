@@ -173,11 +173,11 @@ const EditModal = ({initialImage,initialName}:EditModalProps) => {
             </div>
             <div className='flex justify-between'>
             <DialogClose ref={closeRef} asChild>
-              <Button type="button" variant="ghost">
+              <Button type="button" variant="ghost" disabled={isPending}>
                 Cancel
               </Button>
             </DialogClose>
-            <Button>
+            <Button type='submit' disabled={isPending}>
                 Save
             </Button>
             </div>

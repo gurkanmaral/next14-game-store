@@ -2,7 +2,7 @@ import dynamic from 'next/dynamic'
 
 const noSSR = dynamic(()=>import('./_components/CheckoutPage'),{ssr:false})
 
-const Page = async() => {
+const Page = () => {
   const DynamicCheckoutPage = noSSR;
 
     

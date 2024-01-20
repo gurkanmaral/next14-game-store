@@ -9,6 +9,7 @@ import CartBox from './Cart';
 const Actions =async () => {
 
   const user = await currentUser();
+  console.log(user)
   return (
     <div className='ml-2 md:ml-0'>
         {!user && (

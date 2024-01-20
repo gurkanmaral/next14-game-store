@@ -41,14 +41,13 @@ const [sortOption, setSortOption] = useState<'Alpha' | 'lowToHigh' | 'highToLow'
 const baseUrl = process.env.NEXT_PUBLIC_APP_URL
 
 const handleGenreChange = (newGenre) => {
-  // Construct a URL with the 'cat' query parameter
   setGenres(newGenre)
   const url = qs.stringifyUrl({
     url: '/discover',
     query: { genre: newGenre },
   }, { skipEmptyString: true });
 
-  // Use router.push to navigate to the constructed URL
+ 
   router.push(url);
 };
 

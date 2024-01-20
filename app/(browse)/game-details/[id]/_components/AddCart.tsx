@@ -27,7 +27,7 @@ gameId,alreadyBought,userId}:AddCartProps) => {
 
     const {addtoCart,games,removeFromCart} = useCartStore();
 
-    const router = useRouter();
+   
 
 
 

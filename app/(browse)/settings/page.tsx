@@ -11,6 +11,7 @@ import { useCurrentUser } from "@/hooks/useCurrentUser";
 import { SettingsSchema } from "@/schemas/settingsSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 
 import { useForm } from "react-hook-form";
@@ -18,6 +19,10 @@ import * as z from "zod";
 
 const SettingsPage = () => {
     const user = useCurrentUser();
+   const router = useRouter();
+    if(!user) {
+      router.push("/auth/login")
+    }
     const [error, setError] = useState<string | undefined>();
     const [success, setSuccess] = useState<string | undefined>();
 
