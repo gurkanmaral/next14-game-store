@@ -1,3 +1,4 @@
+"use client";
 import React from 'react'
 import Filters from './_components/filters'
 import DiscoverList from './_components/discoverList'
