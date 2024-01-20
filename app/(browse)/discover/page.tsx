@@ -8,6 +8,8 @@ import { getFilteredGames } from '@/data/game/get-details';
 import dynamic from 'next/dynamic';
 
 
+
+
 const font = Poppins({
     subsets: ["latin"],
     weight: ["100", "300", "400", "700", "900"],

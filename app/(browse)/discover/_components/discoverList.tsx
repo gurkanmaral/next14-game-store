@@ -72,13 +72,10 @@ const sortGames = (games:DiscoverListGameProps[], sortOption: 'Alpha' | 'lowToHi
   }
 }
 
-let filteredGames = [];
 
-if(games) {
-  filteredGames = games?.filter(game =>
-    selectedPlatforms.length === 0 || game.platforms.some((platform: string) => selectedPlatforms.includes(platform))
-  );
-}
+const filteredGames = games?.filter(game =>
+  selectedPlatforms.length === 0 || game.platforms.some((platform: string) => selectedPlatforms.includes(platform))
+);
 
 const sortedAndFilteredGames = sortGames(filteredGames, sortOption);
 
