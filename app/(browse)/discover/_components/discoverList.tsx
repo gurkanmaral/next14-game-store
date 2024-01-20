@@ -35,18 +35,20 @@ const [sortOption, setSortOption] = useState<'Alpha' | 'lowToHigh' | 'highToLow'
     const fetchGames = async () => {
         setLoading(true);
         try {
-
-             const response = await fetch(`/api/getGames?genre=${genres}`);
-             const data = await response.json();
-             if (!response.ok) {
-              throw new Error(`Request failed with status: ${response.status}`);
-            }
-             console.log(data)
-             setGames(data);
+          const response = await fetch(`/api/getGames?genre=${genres}`);
+          if (!response.ok) {
+            throw new Error(`Request failed with status: ${response.status}`);
+          }
+          const data = await response.json();
+          if (Array.isArray(data)) { 
+            setGames(data);
+          } else {
+            console.error('Response data is not an array:', data);
+          }
         } catch (error) {
-            console.error('Error fetching games:', error);
+          console.error('Error fetching games:', error);
         } finally {
-            setLoading(false);
+          setLoading(false);
         }
     };
 
