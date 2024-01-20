@@ -29,7 +29,6 @@ export async function GET( req: NextRequest,
         let games;
 
     if (genre === 'All') {
-      // Fetch all games when genre is 'All'
       games = await db.game.findMany({
         select: {
           id: true,

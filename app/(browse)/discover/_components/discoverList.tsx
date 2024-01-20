@@ -30,6 +30,8 @@ const [sortOption, setSortOption] = useState<'Alpha' | 'lowToHigh' | 'highToLow'
 
   const [loading, setLoading] = useState(false);
 
+  console.log(games)
+
 
   useEffect(() => {
     const fetchGames = async () => {
@@ -40,11 +42,8 @@ const [sortOption, setSortOption] = useState<'Alpha' | 'lowToHigh' | 'highToLow'
             throw new Error(`Request failed with status: ${response.status}`);
           }
           const data = await response.json();
-          if (Array.isArray(data)) { 
-            setGames(data);
-          } else {
-            console.error('Response data is not an array:', data);
-          }
+          console.log(data,"data")        
+            setGames(data);         
         } catch (error) {
           console.error('Error fetching games:', error);
         } finally {
