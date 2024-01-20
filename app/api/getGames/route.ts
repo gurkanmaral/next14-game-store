@@ -21,8 +21,15 @@ export async function GET( req: NextRequest,
     try {
         
        
-     
-      const games = await db.game.findMany({
+        const {searchParams} = new URL(req.url)
+
+        const genre = searchParams.get("genre")
+      
+
+        let games;
+
+    if (genre === 'All' || !genre) {
+      games = await db.game.findMany({
         select: {
           id: true,
           title: true,
@@ -32,6 +39,25 @@ export async function GET( req: NextRequest,
           price: true,
         }
       });
+    } else {
+    
+      games = await db.game.findMany({
+        where: {
+          Genres: {
+            has: genre
+          }
+        },
+        select: {
+          id: true,
+          title: true,
+          allImages: true,
+          SpecialPrice: true,
+          platforms: true,
+          price: true,
+          Genres:true,
+        }
+      });
+    }
 
     return NextResponse.json(games, {
       status: 200

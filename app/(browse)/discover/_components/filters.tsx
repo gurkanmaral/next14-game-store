@@ -21,7 +21,7 @@ interface FiltersProps {
 }
 
 
-const Filters = ({setSortOption,sortOption,setGenres,genres,selectedPlatforms,setSelectedPlatforms}:FiltersProps) => {
+const Filters = ({handleGenreChange,setSortOption,sortOption,setGenres,genres,selectedPlatforms,setSelectedPlatforms}:FiltersProps) => {
 
 
 
@@ -71,7 +71,7 @@ const Filters = ({setSortOption,sortOption,setGenres,genres,selectedPlatforms,se
         </div>
         <div className="flex gap-2 items-center col-span-2">
             <p>Select Genres:</p>
-            <Select onValueChange={setGenres} value={genres}>
+            <Select onValueChange={handleGenreChange} value={genres}>
             <SelectTrigger className="w-[180px]">
                 <SelectValue placeholder="All" />
             </SelectTrigger>

@@ -36,28 +36,54 @@ const [sortOption, setSortOption] = useState<'Alpha' | 'lowToHigh' | 'highToLow'
 
 const baseUrl = process.env.NEXT_PUBLIC_APP_URL
 
-  useEffect(() => {
-    const fetchGames = async () => {
-        setLoading(true);
-        try {
-          const response = await fetch(`${baseUrl}/api/getGames`);
-          if (!response.ok) {
-            throw new Error(`Request failed with status: ${response.status}`);
-          }
-          const data = await response.json();
-          console.log(data,"data")        
-            setGames(data);         
-        } catch (error) {
-          console.error('Error fetching games:', error);
-        } finally {
-          setLoading(false);
+const fetchAllGames = async () => {
+  setLoading(true);
+  try {
+    const response = await fetch(`${baseUrl}/api/getGames`, { cache: 'no-store' });
+    if (!response.ok) {
+      throw new Error(`Request failed with status: ${response.status}`);
+    }
+    const data = await response.json();
+    console.log(data, "data");
+    setGames(data);
+  } catch (error) {
+    console.error('Error fetching games:', error);
+  } finally {
+    setLoading(false);
+  }
+};
+
+useEffect(() => {
+  fetchAllGames();
+}, [baseUrl]);
+
+const handleGenreChange = (newGenre) => {
+  setGenres(newGenre);
+  if (newGenre === "All") {
+   
+    fetchAllGames();
+  } else {
+    
+    const fetchGamesByGenre = async () => {
+      setLoading(true);
+      try {
+        const response = await fetch(`${baseUrl}/api/getGames?genre=${newGenre}`, { cache: 'no-store' });
+        if (!response.ok) {
+          throw new Error(`Request failed with status: ${response.status}`);
         }
+        const data = await response.json();
+        console.log(data, "data");
+        setGames(data);
+      } catch (error) {
+        console.error(`Error fetching games for genre ${newGenre}:`, error);
+      } finally {
+        setLoading(false);
+      }
     };
 
-    fetchGames();
-}, [genres,baseUrl]);
-
-
+    fetchGamesByGenre();
+  }
+};
 
 const sortGames = (games:DiscoverListGameProps[], sortOption: 'Alpha' | 'lowToHigh' | 'highToLow') => {
   switch(sortOption) {
@@ -92,6 +118,7 @@ const sortedAndFilteredGames = sortGames(filteredGames, sortOption);
       genres={genres}
       selectedPlatforms={selectedPlatforms}
       setSelectedPlatforms={setSelectedPlatforms}
+      handleGenreChange={handleGenreChange}
       />
       <div className='w-full grid grid-cols-1 md:grid-cols-4 gap-[20px]'>
       {loading ? (
