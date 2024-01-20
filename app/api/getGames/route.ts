@@ -54,6 +54,7 @@ export async function GET( req: NextRequest,
           SpecialPrice: true,
           platforms: true,
           price: true,
+          Genres:true,
         }
       });
     }

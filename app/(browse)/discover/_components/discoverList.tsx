@@ -6,6 +6,8 @@ import { getFilteredGames } from '@/data/game/get-details';
 import Filters from './filters';
 import { Loader } from 'lucide-react';
 
+export const dynamic = "force-dynamic"
+
 interface DiscoverListProps {
   games:DiscoverListGameProps[];
 }
@@ -32,12 +34,13 @@ const [sortOption, setSortOption] = useState<'Alpha' | 'lowToHigh' | 'highToLow'
 
   console.log(games)
 
+const baseUrl = process.env.NEXT_PUBLIC_APP_URL
 
   useEffect(() => {
     const fetchGames = async () => {
         setLoading(true);
         try {
-          const response = await fetch(`/api/getGames?genre=${genres}`);
+          const response = await fetch(`${baseUrl}/api/getGames?genre=${genres}`);
           if (!response.ok) {
             throw new Error(`Request failed with status: ${response.status}`);
           }
@@ -52,7 +55,7 @@ const [sortOption, setSortOption] = useState<'Alpha' | 'lowToHigh' | 'highToLow'
     };
 
     fetchGames();
-}, [genres]);
+}, [genres,baseUrl]);
 
 
 
