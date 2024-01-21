@@ -38,16 +38,6 @@ export const getGameRatingByUser = async(gameId:string) => {
     try {
         const self = await getSelf();
 
-        
-        const game = await db.game.findUnique({
-            where:{
-                id:gameId
-            }
-        })
-        if(!game) {
-            throw new Error("Game not found");
-        }
-
         const existingRating = await db.rate.findFirst({
             where:{
                 userId:self.id,
@@ -92,8 +82,11 @@ export const addRating = async(gameId:string,rate:number) => {
                 rate:rate
             },
             include:{
-                game:true,
-                user:true,
+                game:{
+                    select:{
+                        title:true,
+                    }
+                }
             }
         })
         return newRating
