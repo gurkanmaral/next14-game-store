@@ -43,8 +43,8 @@ const [gameCount, wishlishCount, favoriteGamesCount, reviewCount] = await Promis
   return (
     <div className='pt-10 max-w-screen-lg mx-auto gap-10 flex flex-col items-center backdropmask'>
        <ProfileHeader 
-       image={user?.image} 
-       name={user?.name} 
+       image={user.image} 
+       name={user.name} 
        isSelf={isSelf} 
        isFollowing={isFollowing}
        userId={user.id}

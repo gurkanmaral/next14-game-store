@@ -33,12 +33,12 @@ const CommentPage = async({params}:CommentDetailsProps) => {
     
 
   return (
-    <div className='pt-10 w-full max-w-screen-lg mx-auto gap-4 flex flex-col items-center '>
-        <div className='bg-black gap-4 rounded-lg p-4 grid grid-cols-1 md:grid-cols-8 shadow-md shadow-white/15 relative'>
-          <div className='col-span-1 md:col-span-2  '>
+    <div className='pt-10 w-full max-w-screen-xl mx-auto gap-4  flex flex-col items-center '>
+        <div className='bg-black gap-4 md:w-[70%] rounded-lg p-4 grid grid-cols-1 md:grid-cols-8 shadow-md shadow-white/15 relative'>
+          <div className='col-span-1 md:col-span-1  '>
               <img src={commentDetails?.user?.image ? commentDetails.user.image : "/assas1.jpg"} alt=""  className='h-[100px] w-[100px] rounded-full  object-cover'/>
           </div>
-          <div className='col-span-1 md:col-span-6 flex flex-col w-full gap-2'>
+          <div className='col-span-1 md:col-span-7 flex flex-col w-full gap-2'>
               <div>
                   <h1 className='text-2xl font-bold'>{commentDetails?.user?.name}</h1>
               </div>
@@ -66,7 +66,7 @@ const CommentPage = async({params}:CommentDetailsProps) => {
         <div className='w-full flex items-center justify-center '>
           <AddCommentToComment userId={user.id} gameId={commentDetails.gameId} parentId={commentDetails.id} />
         </div>
-        <div className='gap-4 flex flex-col'>
+        <div className='gap-4 grid grid-cols-1 mb-10 '>
           {commentDetails.children.map((comment)=>(
             <ChildrenComments 
             key={comment.id}

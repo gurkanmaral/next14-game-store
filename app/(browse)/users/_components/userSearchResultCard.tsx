@@ -15,12 +15,12 @@ interface UserCardProps{
 const UserSearchResultCard = ({user}:UsersProps) => {
 
   return (
-    <Link href={`/${user.id}`} className='col-span-1 grid grid-cols-10 items-center just-center gap-2 '>
+    <Link href={`/${user.id}`} className='col-span-1 grid grid-cols-10 items-center just-center gap-4 '>
       <div className='col-span-1 bg-black rounded-full overflow-hidden'>
         <img src={user.image ? user.image : "/char.svg"} alt="user-image" className='rounded-full aspect-square w-full h-full object-cover' />
       </div>
       <div className='col-span-9'>
-          <h1>
+          <h1 className='text-2xl font-bold'>
             {user.name}
           </h1>
       </div>

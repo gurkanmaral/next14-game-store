@@ -21,15 +21,17 @@ const UserSearchResults = ({users}:UsersProps) => {
 
 
   return (
-    <div className='flex flex-col gap-4'>
-         <div className=''>
+    <div className='flex flex-col w-full gap-4'>
+         <div className='w-full grid grid-cols-1'>
          <UserSearch value={value} setValue={setValue} />
          </div>
-        <div>
+        <div className='grid grid-cols-1'>
             {filteredUsers.length === 0 && (
-                <p>
+                <div className='w-full col-span-1'>
+                  <p className='text-5xl font-bold'>
                     No users found
                 </p>
+                </div>
             )}
             <div className='grid grid-cols-1 gap-5'>
                 {filteredUsers.map((user)=>(

@@ -22,7 +22,7 @@ const FollowingPage = async({params}:UserPageProps) => {
       <div>
         <ProfileLink userId={params.id} />
       </div>
-      <div className='grid grid-cols-5'>
+      <div className='grid grid-cols-5 gap-4'>
         {followers?.length > 0 ? followers?.map((follow)=>(
           <FollowCard key={follow.id} image={follow.image} name={follow.name} id={follow.id} />
         )) : (

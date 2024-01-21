@@ -13,7 +13,6 @@ export const getUserByName = async (id:string) => {
 export const getAllUsers = async () => {
 
     const users = await db.user.findMany({
-
         select:{
             id:true,
             image:true,

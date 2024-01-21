@@ -26,3 +26,31 @@ export const isGameInWishlist = async(userId:string,gameId:string) => {
     return false;
 
 }
+
+
+export const userWishlist = async(userId:string) => {
+    try {
+        const wishlistGames = await db.user.findUnique({
+            where:{
+                id:userId,
+            },
+            include:{
+                wishlistGames:{
+                    select:{
+                        allImages:true,
+                        id:true,
+                        title:true
+                    }
+                }
+            }
+        })
+        if (wishlistGames) {
+            return wishlistGames.wishlistGames;
+          } else {
+            
+            return [];
+          }
+    } catch (error) {
+        console.log(error)
+    }
+}

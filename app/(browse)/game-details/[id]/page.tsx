@@ -29,8 +29,11 @@ interface GameDetailsParams {
 
 const GameDetails = async({params}:GameDetailsParams) => {
 
-    const game = await getGameById(params.id);
-    const user = await currentUser();
+    const [game, user] = await Promise.all([
+        getGameById(params.id),
+        currentUser()
+    ]);
+
 
     if(!game) {
         return (
@@ -39,24 +42,20 @@ const GameDetails = async({params}:GameDetailsParams) => {
             </div>
         )
     }
-    const comments = await getCommentsByGameId(params.id);
-
-    let isFavorite = false;
-    let isWishlist = false;
-
-    if (user) {
-        isFavorite = await isGameFavoriteByUser(user.id, params.id);
-        isWishlist = await isGameInWishlist(user.id, params.id);
-      }
-      
-    const recommendedGamesArray = await recommendedGames(params.id)
+    const additionalData = user ? await Promise.all([
+        getCommentsByGameId(params.id),
+        isGameFavoriteByUser(user.id, params.id),
+        isGameInWishlist(user.id, params.id),
+        recommendedGames(params.id),
+        getOrderByUserId(user.id, params.id),
+        getGameRatingByUser(params.id)
+    ]) : [];
 
 
+
+
+    const [comments, isFavorite, isWishlist, recommendedGamesArray, order, rating] = additionalData;
    
-    
-
-    const order = user ? await getOrderByUserId(user.id, params.id) : null; 
-    const rating = user ? await getGameRatingByUser(params.id) : null;
     const averageRating = await getAverageRatingOfGame(params.id);
 
 

@@ -3,6 +3,7 @@ import React from 'react'
 import ProfileLink from '../_components/ProfileLink';
 import { getGameDetailsInLibrary } from '@/data/game/get-details';
 import LibraryItem from './_components/LibraryItem';
+import { getOrderByUserId, getOrdersByUserId } from '@/data/order/get-order';
 
 interface UserPageProps {
   params:{
@@ -19,24 +20,14 @@ const LibraryPage = async({params}:UserPageProps) => {
     return null
   }
 
-  const boughtGameIds = user?.orders?.flatMap(order => 
-    order.boughtGames.map(game => game)
-);
+  const orders = await getOrdersByUserId(user.id)
 
-if (!boughtGameIds) {
-  return null; 
-}
-
-
-const gameIds = boughtGameIds?.map(game => game.gameId);
+   const gamesDetails = await Promise.all(
+    orders.map(id => getGameDetailsInLibrary(id))
+ );
 
 
 
-const gamesDetails = await Promise.all(
-  gameIds.map(id => getGameDetailsInLibrary(id))
-);
-
-  
 
   return (
 
@@ -45,7 +36,10 @@ const gamesDetails = await Promise.all(
           <div className="">
             <ProfileLink userId={user.id} />
           </div>
-          <div className='grid  grid-cols-1 md:grid-cols-3 lg:grid-cols-4 p-4 mt-10 gap-2 '>
+          <div className='w-full borderflex items-start'>
+            <h1 className='text-3xl font-bold mt-2'>{user.name}&apos; library</h1>
+          </div>
+          <div className='grid  grid-cols-1 md:grid-cols-3- lg:grid-cols-4  gap-5'>
               {gamesDetails.length === 0 ? (
               <div className=' text-5xl font-bold text-center w-full col-span-1 md:col-span-3 lg:col-span-4 mt-10'>
                   <h1>No Games in users library.</h1>

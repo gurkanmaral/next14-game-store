@@ -24,12 +24,11 @@ const ChildrenComments = ({review,user,likeCount,isLiked,gameId,userId,id}:Child
 
 
   return (
-    <div className=''>
-        <div className='bg-black  rounded-lg p-4 grid grid-cols-8 shadow-md shadow-white/15'>
-        <div className='col-span-1  '>
+    <div className='col-span-1 grid grid-cols-1 md:grid-cols-8 p-4 relative gap-4 items-center w-full bg-black shadow-md shadow-white/15'>    
+        <div className='col-span-1 md:col-span-2  '>
             <img src={user.image ? user.image : "/assas1.jpg"} alt=""  className='h-[100px] w-[100px] rounded-full  object-cover'/>
         </div>
-        <div className='col-span-7 flex flex-col w-full gap-2'>
+        <div className='col-span-1 md:col-span-6 flex flex-col w-full gap-2'>
             <div>
                 <h1 className='text-2xl font-bold'>{user.name}</h1>
             </div>
@@ -38,19 +37,23 @@ const ChildrenComments = ({review,user,likeCount,isLiked,gameId,userId,id}:Child
                {review}
                </p>
             </div>
-            <div>
-              <span>{likeCount}</span> 
+           <div className="flex gap-4 items-center">
+           <div>
+              <span>{likeCount} Likes</span> 
             </div>
             <div>
               <AddLike commentId={id} userId={user.id} gameId={gameId} isLiked={isLiked} /> 
             </div>
+           </div>
             <div>
-             {userId === user.id && (
-              <DeleteComment commentId={id} userId={userId} isParent={false} />
-             )}
+              <div className='absolute top-5 right-5'>
+                {userId === user.id && (
+                  <DeleteComment commentId={id} userId={userId} isParent={false} />
+                )}
+              </div> 
             </div>
         </div>
-        </div>
+        
 
     </div>
   )

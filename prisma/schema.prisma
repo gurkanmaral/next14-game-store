@@ -51,14 +51,13 @@ model Order {
   total         String
   boughtGames   BoughtGame[]
   user          User      @relation(fields: [userId], references: [id])
+
 }
 model BoughtGame {
   id        String   @id @default(cuid())
   orderId   String  
   gameId    String
   order     Order    @relation(fields: [orderId], references: [id])
-
-  @@index([orderId])
  
 }
 

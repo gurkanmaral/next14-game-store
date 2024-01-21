@@ -24,7 +24,7 @@ const AddCommentToComment = ({userId,gameId,parentId}:AddCommentToCommentProps) 
     }
 
   return (
-    <div className="w-full flex flex-col items-center justify-center gap-4">
+    <div className="px-4 w-full flex flex-col items-center justify-center gap-4">
        <Textarea 
        value={message}
        onChange={(e)=>setMessage(e.target.value)}

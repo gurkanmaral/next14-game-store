@@ -11,7 +11,7 @@ const CheckoutPage = () => {
   const {games,removeFromCart,totalItems,totalPrice} = useCartStore();
 
 
-
+  const roundedTotalPrice = Math.round(totalPrice * 100) / 100;
   return (
     <div className='w-full flex flex-col'>
         <h1 className='text-2xl font-bold'>Checkout</h1>
@@ -22,7 +22,7 @@ const CheckoutPage = () => {
         </div>
         <div className='flex flex-col gap-4 mt-4 mb-4'>
           <span className='text-xl font-bold'>Total items in cart: <span className='text-emerald-500'>{totalItems}</span></span>
-          <span className='text-xl font-bold'>Total Price: <span className='text-emerald-500'>{totalPrice}$</span></span>
+          <span className='text-xl font-bold'>Total Price: <span className='text-emerald-500'>{roundedTotalPrice}$</span></span>
         </div>
         <CheckoutButton games={games} />
     </div>

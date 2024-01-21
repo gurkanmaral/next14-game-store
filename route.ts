@@ -8,6 +8,7 @@ export const publicRoutes = [
     "/users",
     "/game-details/:id",
     "/:id",
+    "/api/upload"
 ];
 
 export const authRoutes = [
