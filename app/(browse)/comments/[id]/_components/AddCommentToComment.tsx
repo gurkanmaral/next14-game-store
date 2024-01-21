@@ -4,6 +4,7 @@ import { addCommentToComment } from "@/actions/comment";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { useState, useTransition } from "react";
+import { toast } from "sonner";
 
 interface AddCommentToCommentProps {
     userId:string;
@@ -19,6 +20,7 @@ const AddCommentToComment = ({userId,gameId,parentId}:AddCommentToCommentProps) 
     const handleAddComment = () => {
         startTransition(()=>{
             addCommentToComment(userId,parentId,gameId,message)
+                .then(()=>toast.success("Your comment is published"))
         })
         setMessage("");
     }

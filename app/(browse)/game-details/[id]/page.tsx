@@ -42,30 +42,25 @@ const GameDetails = async({params}:GameDetailsParams) => {
             </div>
         )
     }
-    const additionalData = user ? await Promise.all([
+    const [comments, recommendedGamesArray, averageRating] = await Promise.all([
         getCommentsByGameId(params.id),
-        isGameFavoriteByUser(user.id, params.id),
-        isGameInWishlist(user.id, params.id),
         recommendedGames(params.id),
-        getOrderByUserId(user.id, params.id),
-        getGameRatingByUser(params.id)
-    ]) : [];
+        getAverageRatingOfGame(params.id)
+    ]);
 
 
+    let isFavorite = false, isWishlist = false, order = [], rating;
 
-
-    const [comments, isFavorite, isWishlist, recommendedGamesArray, order, rating] = additionalData;
-   
-    const averageRating = await getAverageRatingOfGame(params.id);
-
-
-
-
-    let alreadyBought = false;
-
-    if(order && order.length > 0 ) {
-        alreadyBought = true;
+    if (user) {
+        [isFavorite, isWishlist, order, rating] = await Promise.all([
+            isGameFavoriteByUser(user.id, params.id),
+            isGameInWishlist(user.id, params.id),
+            getOrderByUserId(user.id, params.id),
+            getGameRatingByUser(params.id)
+        ]);
     }
+
+    let alreadyBought = order && order.length > 0;
 
   return (
     <div className='pt-10 w-full max-w-screen-xl mx-auto gap-4 flex flex-col items-center '>

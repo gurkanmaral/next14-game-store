@@ -48,7 +48,7 @@ const Comments = ({userId,gameId,comments}:CommentsProps) => {
     <div className='flex flex-col mt-10 gap-4'>       
        <AddComment userId={userId} gameId={gameId} />
        <Separator />
-        <div className='grid grid-cols-1 px-0 md:px-10'>
+        <div className='grid grid-cols-1 px-0 md:px-10 gap-4'>
            {comments.map((comment)=>(
             <Comment 
             key={comment.id}

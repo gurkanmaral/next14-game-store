@@ -2,7 +2,7 @@ import { db } from "@/lib/db"
 
 
 export const isGameFavoriteByUser = async(userId:string,gameId:string) => {
-
+    if (!userId) return false;
     const userWithFavorites = await db.user.findUnique({
         where: {
             id: userId

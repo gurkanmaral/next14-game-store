@@ -1,7 +1,7 @@
 import { db } from "@/lib/db"
 
 export const getOrderByUserId = async(userId:string,gameId:string) => {
-
+    if (!userId) return [];
     try {
         const order = await db.order.findMany({
             where:{
@@ -23,6 +23,7 @@ export const getOrderByUserId = async(userId:string,gameId:string) => {
         return order
     } catch (error) {
         console.log(error)
+        return [];
     }
 }
 
