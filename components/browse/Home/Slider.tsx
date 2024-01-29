@@ -31,13 +31,13 @@ const Slider = ({games}:SliderProps) => {
 
  
   return (
-    <Carousel className="w-full max-w-7xl border-none hidden md:block">
+    <Carousel className="w-[85%] 2xl:max-w-5xl border-none hidden md:block">
     <CarouselContent>
       {games.map((game, index) => (
         <CarouselItem key={game.id} className="">
           <div className="p-1">
-            <Card className="border-none">
-              <CardContent className="relative flex h-[700px] items-center justify-center">
+            <Card className="border-none ">
+              <CardContent className="relative flex  h-[700px] items-center justify-center">
                 <Link href={`/game-details/${game.id}`} className="">                   
                       <Image
                       src={game.allImages[0]}
@@ -46,7 +46,7 @@ const Slider = ({games}:SliderProps) => {
                       className=" rounded-xl opacity-85"
                       />              
                     <div className="absolute bottom-[20%] right-[10%] w-[20%] h-auto ">
-                      <h1 className="text-5xl font-bold ">
+                      <h1 className="text-xl md:text-3xl lg:text-5xl font-bold ">
                         {game.title}
                       </h1>
                     </div>

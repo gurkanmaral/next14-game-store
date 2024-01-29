@@ -21,7 +21,7 @@ const Home = async() => {
     return null
   }
   return (
-    <div className='pt-10 max-w-screen-2xl mx-auto gap-10 flex flex-col items-center '>
+    <div className='pt-5 md:pt-10 max-w-screen-2xl mx-auto gap-10 flex flex-col items-center '>
       <Suspense fallback={<HomeSkeleton />}>
        <Slider games={games}/>
        <SpecialOffers games={games} />

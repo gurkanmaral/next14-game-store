@@ -124,10 +124,10 @@ export const removeGameFromWishlistAfterBuy = async (userId: string, gameId: str
             throw new Error("User not found");
         }
 
-        // Check if game is in the user's wishlist
+      
         const isGameInWishlist = user.wishlistGames.some(game => game.id === gameId);
 
-        // If the game is in the wishlist, proceed to remove it
+    
         if (isGameInWishlist) {
             await db.user.update({
                 where: {
